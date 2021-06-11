@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <math.h>
+#include <windows.h>
+
+double one_e_sqr(int n) // lim n -> 0 (1+n)^n분의 1제곱 도출 함수
+{
+	double inputn = 1 / (float)n;
+	double e = inputn;
+	e = pow(e + 1, 1 / inputn);
+	return e;
+}
+
+double e_sqr(int n) // lim n -> inf (1+n분의 1)^n 도출 함수
+{
+	double inputn = (double)n;
+	double e = (inputn + 1) / inputn;
+	e = pow(e, inputn);
+	return e;
+}
+
+int main(int argc, char *argv[], char *env[])
+{
+	double e;
+	for (long n = 1;  n <= 1000000000;) {
+		e = one_e_sqr(n);
+		double bin = 1 / n;
+		printf("n=%d일 때의 (1+n)^(1/n)의 값: %.15lf, ", n, e);
+		bin = e;
+
+		e = e_sqr(n);
+		printf("{1+(1/n)}^n의 값: %.15lf\n", e);
+		bin = ((bin + e) / 2) - exp(1);
+
+		printf("두 값의 평균과 자연상수의 차: %.15lf\n\n", bin);
+		double commonLog = log10(n);
+		n += pow(10, floor(commonLog));
+	}
+	system("PAUSE");
+	return 0;
+}
