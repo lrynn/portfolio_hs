@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <math.h>
+#include <windows.h>
+
+long long factorial(int n) // 팩토리얼 도출 함수
+{
+	long long bin = 1;
+	for (int i = 1; i <= n; i++) {
+		bin *= i;
+	}
+	return bin;
+}
+
+double econst(int n) // 자연상수 도출 함수
+{
+	switch (n) {
+	case 1:
+		return 2;
+		break;
+	default:
+		return (double)(1 / (double)factorial(n)) + econst(n - 1);
+	}
+}
+
+int main(int argc, char* argv[], char* env[])
+{
+	double e, bin;
+
+	for (long n = 1; n <= 30; n++) {
+		e = econst(n);
+		printf("n=%d일 때의 수열의 합의 값: %.15lf, ", n, e);
+
+		bin = e - exp(1);
+		printf("수열의 합의 값과 자연상수의 차: %.15lf\n\n", bin);
+	}
+	system("PAUSE");
+	return 0;
+}
